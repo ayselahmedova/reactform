@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types';
 
 const UserLogin = () => {
@@ -7,14 +7,18 @@ const UserLogin = () => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
-  const validateEmail = () => {
-    const emailRegex = /^[a-zA-Z0-9._-]+@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}$/;
-    if (!emailRegex.test(email) || !email.endsWith('.ru')) {
-      setEmailError('Yalnız .ru domenlərinə icazə verilir.');
-    } else {
-      setEmailError('');
-    }
-  };
+  // const validateEmail = () => {
+  //   const emailRegex = /^[a-zA-Z0-9._-]+@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}$/;
+  //   // console.log(emailRegex);
+  //   console.log(email);
+  //   if (email.endsWith('.ru')) {
+  //     // console.log(!emailRegex.test(email));
+  //     setEmailError('');
+  //   } else {
+  //     setEmailError('Yalnız .ru domenlərinə icazə verilir.');
+  //     // console.log(emailError);
+  //   }
+  // };
 
   const validatePassword = () => {
     if (password.length < 7) {
@@ -23,24 +27,55 @@ const UserLogin = () => {
       setPasswordError('');
     }
   };
+useEffect(()=>{
+  const validateEmail = () => {
+    // const emailRegex = /^[a-zA-Z0-9._-]+@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}$/;
+    // console.log(emailRegex);
+    console.log(email);
+    if (email.endsWith('.ru')) {
+      // console.log(!emailRegex.test(email));
+      setEmailError('');
+    } else {
+      setEmailError('Yalnız .ru domenlərinə icazə verilir.');
+      // console.log(emailError);
+    }
+  };
+  validateEmail()
+},[ email])
 
   const handleEmailChange = (e) => {
     // validateEmail(e.target.value);
-    setEmail(e.target.value);
-    setEmailError('');
-    validateEmail(e.target.value)
-
+      setEmail(e.target.value);
+    
+    // const validateEmail = () => {
+    //   const emailRegex = /^[a-zA-Z0-9._-]+@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,4}$/;
+    //   // console.log(emailRegex);
+    //   console.log(email);
+    //   if (email.endsWith('.ru')) {
+    //     // console.log(!emailRegex.test(email));
+    //     setEmailError('');
+    //   } else {
+    //     setEmailError('Yalnız .ru domenlərinə icazə verilir.');
+    //     // console.log(emailError);
+    //   }
+    // };
+    // validateEmail()
+    // setEmailError('');
+    // console.log(e.target.value);
+    
+    
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
     setPasswordError('');
-    validatePassword(e.target.value);
+    validatePassword();
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
   };
+  // console.log(emailError);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -49,7 +84,7 @@ const UserLogin = () => {
         <input
           type="text"
           id="email"
-          value={email}
+          // value={email}
           onChange={handleEmailChange}
          
         />
